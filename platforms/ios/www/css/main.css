@@ -1,0 +1,57 @@
+@media all
+{
+  *
+  {
+    box-sizing: border-box;
+  }
+  div[data-role="footer"]
+  {
+    bottom: 0;
+  }
+  #mainList
+  {
+    list-style-type: none;
+  }
+  .listItem
+  {
+  
+  }
+  .listItem span
+  {
+    font-size: 15px;
+    width: 80% !important;
+  }
+  .listItem:hover
+  {
+    background-color: lightgray;
+  }
+  div.ui-input-text
+  {
+    width: 75vw !important;
+    margin: 1vh 3vw;
+	font-size: 14px;
+  }
+  #subBtn
+  {
+    width: 20vw;
+    float: right;
+  }
+  #subBtn:after
+  {
+    clear: all;
+  }
+  .itmIcon
+  {
+    float: right;
+  }
+  .itmIcon:after
+  {
+    clear: right;
+  }
+  input[type='checkbox'] 
+	{
+		width: 15px;
+		height: 15px;
+	}
+  
+}
