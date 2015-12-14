@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var shoppingList = [];
+  var shoppingList= [];
   if (localStorage.getItem("grocery-wils0751")) {
         shoppingList = JSON.parse(localStorage.getItem("grocery-wils0751"));
   }
@@ -7,6 +7,7 @@ $(document).ready(function(){
   $("#subBtn").on("click", addItem);
 
 showList();
+
 
 
   
@@ -26,8 +27,7 @@ showList();
       showList();
       $("#mainList").listview("refresh");
     }
-    
-
+   
   }
 
   function updateList(updatedList)
@@ -36,7 +36,7 @@ showList();
     {
       $("#mainList")
       .append
-      ("<li class='listItem'>" +'<input type="checkbox" id="checkbox"></input>' + "<span>" + updatedList[index] + "</span>" + "<button class='itmIcon ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all' type='button' data-icon='delete' />" +"</li>").listview("refresh");
+      ("<li class='listItem'>" +'<input name="checkbox" type="checkbox" id="checkbox"></input>' + "<span>" + updatedList[index] + "</span>" + "<button class='itmIcon ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all' type='button' data-icon='delete' />" +"</li>").listview("refresh");
  
 	  $('#newItem').val('');
 		 });
@@ -44,15 +44,15 @@ showList();
   
   function delItem()
   {
-    var TBR = $(this);
+    var deleteitems = $(this);
     
-    if(TBR.prop("tagName") === "LI")
+    if(deleteitems.prop("tagName") === "LI")
     {
-      TBR.remove();
+      deleteitems.remove();
     }
-    else if (TBR.prop("tagName") === "BUTTON")
+    else if (deleteitems.prop("tagName") === "BUTTON")
     {
-      TBR.parent().remove();
+      deleteitems.parent().remove();
     }
     shoppingList = [];
 
@@ -66,17 +66,14 @@ showList();
     $("#mainList").listview("refresh");
     
   }
-	
-              
-  function saveList(save)
+function saveList(TBS)
   {
     if('localStorage' in window)
     {
-      save = JSON.stringify(save);
-      localStorage.setItem('grocery-wils0751', save);
+      TBS = JSON.stringify(TBS);
+      localStorage.setItem('grocery-wils0751', TBS);
     }
-  }
-
+  }//Stringify shoppinglist and save to localstorage
 
 function showList(){
     var output = document.querySelector("#mainList");
@@ -87,7 +84,7 @@ function showList(){
       ("<li class='listItem'>" +'<input type="checkbox" id="checkbox"></input>' + "<span>" + shoppingList[i] + "</span>" + "<button class='itmIcon ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all' type='button' data-icon='delete' />" +"</li>");
       
 
-   $(".listItem").bind(delItem);
+  $(".listItem").bind(delItem);
 
   $("[class^='itmIcon']").bind("click", delItem);
 		

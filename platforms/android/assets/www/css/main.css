@@ -1,7 +1,4 @@
-
-@media all
-{
-  *
+ *
   {
     box-sizing: border-box;
   }
@@ -51,5 +48,8 @@
 		width: 15px;
 		height: 15px;
 	}
-  
+  #mainList
+	{	
+	  text-transform: lowercase;
+	}
 }

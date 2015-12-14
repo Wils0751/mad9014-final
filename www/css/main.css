@@ -1,4 +1,4 @@
-*
+ *
   {
     box-sizing: border-box;
   }
@@ -15,6 +15,10 @@
   {
     font-size: 15px;
     width: 80% !important;
+  }
+  .listItem:hover
+  {
+    background-color: lightgray;
   }
   div.ui-input-text
   {
@@ -44,5 +48,8 @@
 		width: 15px;
 		height: 15px;
 	}
-  
-
+  #mainList
+	{	
+	  text-transform: lowercase;
+	}
+}

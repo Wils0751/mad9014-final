@@ -62,15 +62,15 @@ $(document).ready(function(){
   
   function delItem()
   {
-    var TBR = $(this);
+    var delete = $(this);
     
-    if(TBR.prop("tagName") === "LI")
+    if(delete.prop("tagName") === "LI")
     {
-      TBR.remove();
+      delete.remove();
     }
-    else if (TBR.prop("tagName") === "BUTTON")
+    else if (delete.prop("tagName") === "BUTTON")
     {
-      TBR.parent().remove();
+      delete.parent().remove();
     }
     shoppingList = [];
 
