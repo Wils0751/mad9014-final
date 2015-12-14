@@ -7,9 +7,6 @@ $(document).ready(function(){
   $("#subBtn").on("click", addItem);
 
 showList();
-
-
-
   
   function addItem()
   {
@@ -82,13 +79,10 @@ function showList(){
      $("#mainList")
       .append
       ("<li class='listItem'>" +'<input type="checkbox" id="checkbox"></input>' + "<span>" + shoppingList[i] + "</span>" + "<button class='itmIcon ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all' type='button' data-icon='delete' />" +"</li>");
-      
-
+		
   $(".listItem").bind(delItem);
 
   $("[class^='itmIcon']").bind("click", delItem);
-		
-
     }
 }
 
