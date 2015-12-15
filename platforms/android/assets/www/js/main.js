@@ -1,13 +1,29 @@
-$(document).ready(function(){
-  var shoppingList= [];
-  if (localStorage.getItem("grocery-wils0751")) {
-        shoppingList = JSON.parse(localStorage.getItem("grocery-wils0751"));
+$(document).on('ready', init);
+
+function init()
+{
+  var shoppingList = [];
+  var checkbox = [];
+  
+  if ('localStorage' in window)
+  {
+    var list = localStorage.getItem('grocery-wils0751');
+    list = JSON.parse(list);
+   
+    if (list != null)
+    {
+      shoppingList = list[0];
+      checkbox = list[1];
+     
+      updateList(shoppingList, checkbox);
+     
+    }
   }
   
   $("#subBtn").on("click", addItem);
 
-showList();
-  
+ItemListeners();
+	
   function addItem()
   {
     var newItem = $("#itemInput :input").val();
@@ -15,29 +31,35 @@ showList();
     if (/\S/.test(newItem))
     {
       shoppingList.push(newItem);
-  
-      saveList(shoppingList);
+      checkbox.push(false);
+
+      saveList(shoppingList, checkbox);
 
       newItem = [newItem];
-      updateList(newItem);
-
-      showList();
+      updateList(newItem, [false]);
+    
+      ItemListeners();
+ 
       $("#mainList").listview("refresh");
     }
-   
+    
+
   }
 
-  function updateList(updatedList)
+  function updateList(updatedList, updatedState)
   {
     $(updatedList).each(function(index)
     {
       $("#mainList")
-      .append
-      ("<li class='listItem'>" +'<input name="checkbox" type="checkbox" id="checkbox"></input>' + "<span>" + updatedList[index] + "</span>" + "<button class='itmIcon ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all' type='button' data-icon='delete' />" +"</li>").listview("refresh");
- 
-	  $('#newItem').val('');
-		 });
+        .append
+        ("<li class='listItem'>"+"<input type='checkbox' class='checkbox'></input>"+"<span>" + updatedList[index] + "</span>" +
+          "<button class='itmIcon ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all' type='button' data-icon='delete' />" +"</li>").listview("refresh");
+		$('#newItem').val('');
+      $("li:last-child input").prop("checked", updatedState[index]);
+    });
   }
+  
+
   
   function delItem()
   {
@@ -51,39 +73,42 @@ showList();
     {
       deleteitems.parent().remove();
     }
+    
     shoppingList = [];
-
-    $("li span").each(function(index)
+    checkbox = [];
+ 
+    $("#mainList li").each(function(index)
     {
-      shoppingList.push($(this).text());
-		 
+      shoppingList.push($(this).find("span").text());
+      checkbox.push($(this).find("input").prop("checked"));
     });
-    saveList(shoppingList);
+    saveList(shoppingList, checkbox);
 
     $("#mainList").listview("refresh");
-    
   }
-function saveList(TBS)
+  
+  function checkboxChange()
+  {
+    var check = $(this);
+    checkbox[check.parent().index()] = check.prop("checked");
+    saveList(shoppingList, checkbox);
+  }
+                         
+  function saveList(items, check)
   {
     if('localStorage' in window)
     {
-      TBS = JSON.stringify(TBS);
-      localStorage.setItem('grocery-wils0751', TBS);
+      var save = [items, check]
+      localStorage.setItem('grocery-wils0751', JSON.stringify(save));
     }
-  }//Stringify shoppinglist and save to localstorage
-
-function showList(){
-    var output = document.querySelector("#mainList");
-    output.innerHTML = "";
-    for(var i = 0; i < shoppingList.length; i++){
-     $("#mainList")
-      .append
-      ("<li class='listItem'>" +'<input type="checkbox" id="checkbox"></input>' + "<span>" + shoppingList[i] + "</span>" + "<button class='itmIcon ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all' type='button' data-icon='delete' />" +"</li>");
-		
-  $(".listItem").bind(delItem);
-
-  $("[class^='itmIcon']").bind("click", delItem);
-    }
+  }
+  
+  function ItemListeners()
+  {
+   
+    $("[class^='itmIcon']").one("click", delItem);
+   
+    $("[class^='checkbox']").bind("click", checkboxChange);
+    
+  }
 }
-
-});
